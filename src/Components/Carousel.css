@@ -1,0 +1,10 @@
+.swiper-scrollbar {
+  background: #222;
+  height: 16px;
+  border-radius: 10px;
+}
+
+.swiper-scrollbar-drag {
+  background: #ff00ff;
+  border-radius: 10px;
+}
