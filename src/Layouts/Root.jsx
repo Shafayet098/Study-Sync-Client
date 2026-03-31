@@ -17,7 +17,9 @@ const Root = () => {
             <div className=''>
                 {/* Footer */}
                 <hr className='text-slate-600' />
-                <Footer></Footer>
+                <div className='container mx-auto'>
+                    <Footer></Footer>
+                </div>
             </div>
         </>
     );

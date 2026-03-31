@@ -12,7 +12,16 @@ const Nav = () => {
     const { user } = use(AuthContext)
     const [show, setShow] = useState(false)
     const links = <>
-        <Link className="mx-2 mt-2 text-lg transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">Home</Link>
+        <Link className="mx-2 mt-2 text-lg transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">Home
+        </Link>
+        <Link to={'/assignments'} className="mx-2 mt-2 text-lg transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">All Assignments
+        </Link>
+        <Link to={'/createAssignment'} className="mx-2 mt-2 text-lg transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">Create Assignment
+        </Link>
+        <Link to={'/mysubmitted'} className="mx-2 mt-2 text-lg transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">My Submitted
+        </Link>
+        <Link to={'/pending-assignments'} className="mx-2 mt-2 text-lg transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">All Pending
+        </Link>
 
     </>
     return (
@@ -37,7 +46,7 @@ const Nav = () => {
 
 
                     <div className="px-2 lg:px-6 py-2 lg:py-4  duration-300   bg-transparent w-auto opacity-100  flex items-center">
-                        <div className="hidden md:flex lg:flex-row items-center mx-8">
+                        <div className="hidden lg:flex lg:flex-row items-center mx-8">
                             {
                                 links
                             }
