@@ -13,9 +13,9 @@ const Hero = ({ study, heading, title }) => {
         }
     };
     return (
-        <header class="">
-            <div class="container px-6 py-16 mx-auto">
-                <div class="items-center lg:flex">
+        <header class=" z-0">
+            <div class="container px-6 py-16 mx-auto ">
+                <div class="items-center lg:flex z-0">
                     <div class="w-full lg:w-1/2">
                         <div class="lg:max-w-lg flex flex-col gap-2">
                             <h1 class="text-3xl font-semibold text-gray-800 dark:text-white lg:text-4xl">{heading}</h1>

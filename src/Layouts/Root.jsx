@@ -6,11 +6,11 @@ import Footer from '../Components/Footer';
 const Root = () => {
     return (
         <>
-            <div>
+            <div className='fixed top-0 left-0 w-full shadow-md z-50 backdrop-blur-md'>
                 {/* Navigation */}
                 <Nav></Nav>
             </div>
-            <div>
+            <div className='mt-28'>
                 {/* Main */}
                 <Outlet></Outlet>
             </div>

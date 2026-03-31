@@ -4,9 +4,8 @@ import Hero from '../Components/Hero';
 
 const Home = () => {
     return (
-        <div>
+        <div className='relative z-0'>
             <Carousel></Carousel>
-            
         </div>
     );
 };
