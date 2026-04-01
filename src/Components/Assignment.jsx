@@ -18,11 +18,11 @@ const Assignment = () => {
 
     return (
         <div className='mt-16'>
-            <h1 className='text-4xl text-center font-bold text-accent'>Collaborative Assignments</h1>
-            <p className='text-center text-md text-slate-400 mt-2'>Work together, share ideas, and complete assignments with your friends.</p>
+            <h1 className='text-2xl md:4xl text-center font-bold text-accent'>Collaborative Assignments</h1>
+            <p className='text-center px-4 md:px-8 text-md text-slate-400 mt-2'>Work together, share ideas, and complete assignments with your friends.</p>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-8 justify-between px-6 lg:px-10 mt-16'>
                 {
-                    items.map(item => <AssignmentCard
+                    items.slice(0,4).map(item => <AssignmentCard
                         item={item}
                         key={item._id}>
                     </AssignmentCard>)

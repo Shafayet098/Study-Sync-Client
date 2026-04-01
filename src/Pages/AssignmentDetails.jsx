@@ -1,9 +1,33 @@
-import React from 'react';
-import { Link, useLoaderData } from 'react-router';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { Link, Navigate, useLoaderData, useNavigate } from 'react-router';
 
 const AssignmentDetails = () => {
     const data = useLoaderData()
-    const { _id, title, thumbnail, marks, dueDate, userEmail, difficulty, description } = data;
+    console.log(data)
+    const navigate = useNavigate();
+    const { _id, title, thumbnail, marks, dueDate, userEmail, difficulty, description,username } = data;
+    const handleAssignment=async(e)=>{
+        e.preventDefault();
+        const short_note = e.target.note.value;
+        const doc_link = e.target.doc_link.value;
+        const user = {short_note, doc_link}
+         user.AssignmentID = _id;
+         user.userEmail = userEmail;
+         user.marks = marks;
+         user.AssignmentTitle = title;
+         user.ObtainedMarks = null;
+         user.AssignmentStatus = "pending"; 
+         user.assignmentID = _id;
+         user.examinee_name = username;  
+         try{
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/user`, user)
+            toast.success('Assignment Submission Successful')
+            navigate('/mysubmitted')
+            console.log(data)
+         }catch(err){
+            console.log(err)}
+    }
     return (
         <div className='container mx-auto px-12 mb-12'>
             <div class=" overflow-hidden rounded-lg shadow-md bg-white/5">
@@ -39,7 +63,7 @@ const AssignmentDetails = () => {
                 </div>
                 <div className='p-12'>
                     <h1 className='text-center text-4xl font-bold'>Take Assignment</h1>
-                    <form >
+                    <form onSubmit={handleAssignment}>
                         <div>
                             <label className="block mb-2 text-md font-medium text-white">
                                 Quick Short Note
@@ -57,8 +81,8 @@ const AssignmentDetails = () => {
                                 Google Docs link
                             </label>
                             <input
-                                type="text"
-                                name="thumbnail"
+                                type="url"
+                                name="doc_link"
                                 placeholder="Google Docs link"
                                 className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-fuchsia-500"
                             />

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../Contexts/AuthContext';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import toast from 'react-hot-toast';
 
 const CreateAssignment = () => {
     const { user } = use(AuthContext)
@@ -23,6 +24,7 @@ const CreateAssignment = () => {
             console.log(assignmentData)
         try {
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/assign`, assignmentData)
+            toast.success('Assignment Posting is Successful')
             navigate('/assignments')
             console.log(data)
         } catch (err) {

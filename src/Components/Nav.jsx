@@ -7,21 +7,23 @@ import { RiMenuUnfold3Line } from 'react-icons/ri';
 import Button from './Button';
 import { AuthContext } from '../Contexts/AuthContext';
 import DrawerNew from './DrawerNew';
+import './Nav.css'
 
 const Nav = () => {
     const { user } = use(AuthContext)
     const [show, setShow] = useState(false)
     const links = <>
-        <Link className="mx-2 mt-2 text-lg transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">Home
-        </Link>
-        <Link to={'/assignments'} className="mx-2 mt-2 text-lg transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">All Assignments
-        </Link>
-        <Link to={'/createAssignment'} className="mx-2 mt-2 text-lg transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">Create Assignment
-        </Link>
-        <Link to={'/mysubmitted'} className="mx-2 mt-2 text-lg transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">My Submitted
-        </Link>
-        <Link to={'/pending-assignments'} className="mx-2 mt-2 text-lg transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">All Pending
-        </Link>
+
+        <NavLink to={'/'} className={` mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary`}>Home
+        </NavLink>
+        <NavLink to={'/assignments'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">All Assignments
+        </NavLink>
+        <NavLink to={'/createAssignment'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">Create Assignment
+        </NavLink>
+        <NavLink to={'/mysubmitted'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">My Submitted
+        </NavLink>
+        <NavLink to={'/pending-assignments'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">All Pending
+        </NavLink>
 
     </>
     return (
@@ -86,7 +88,7 @@ const Nav = () => {
                                         <button onClick={() => setShow(!show)}>
                                             <RiMenuUnfold3Line className='hover:text-primary absolute top-10 left-4' size={25}></RiMenuUnfold3Line >
                                         </button>
-                                        <Drawer  className=""></Drawer>
+                                        <Drawer className=""></Drawer>
 
                                     </div>
                                 </div>

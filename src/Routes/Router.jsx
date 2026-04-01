@@ -9,6 +9,8 @@ import CreateAssignment from "../Pages/CreateAssignment"
 import AssignmentDetails from "../Pages/AssignmentDetails"
 import MySubmitted from "../Pages/MySubmitted"
 import PendingAssignments from "../Pages/PendingAssignments"
+import PrivateRoute from "./PrivateRoute"
+import Evaluation from "../Pages/Evaluation"
 
 export const router = createBrowserRouter([
     {
@@ -34,19 +36,39 @@ export const router = createBrowserRouter([
             {
                 path: '/assignment/:id',
                 loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/assignment/${params.id}`),
-                Component: AssignmentDetails
+                element:
+                <PrivateRoute>
+                    <AssignmentDetails></AssignmentDetails>
+                </PrivateRoute>
             },
             {
                 path: 'createAssignment',
-                Component: CreateAssignment
+                element:
+                <PrivateRoute>
+                    <CreateAssignment></CreateAssignment>
+                </PrivateRoute>
             },
             {
                 path: 'mysubmitted',
-                Component: MySubmitted
+                element:
+                <PrivateRoute>
+                    <MySubmitted></MySubmitted>
+                </PrivateRoute>
             },
             {
                 path: 'pending-assignments',
-                Component: PendingAssignments
+                 element:
+                <PrivateRoute>
+                    <PendingAssignments></PendingAssignments>
+                </PrivateRoute>
+            },
+            {
+                path: 'evaluation/:id',
+                loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/user?id=${params.id}`),
+                 element:
+                <PrivateRoute>
+                    <Evaluation></Evaluation>
+                </PrivateRoute>
             }
         ]
     }
