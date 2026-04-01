@@ -7,18 +7,38 @@ import Loading from './Loading';
 const Assignments = () => {
     const [items, setItems] = useState([])
     const navigation = useNavigation()
+    const [count, setCount] = useState(0)
+    const [itemsPerPage, setItemsPerPage] = useState(2);
+    const [currentPage, setCurrentPage] = useState(1);
     useEffect(() => {
         const getData = async () => {
             const { data } = await axios(`${import.meta.env.VITE_API_URL
-                }/assign`)
-            // console.log(data)
+                }/cards?page=${currentPage}&size=${itemsPerPage}`)
+            console.log(data)
             setItems(data)
         }
         getData()
-    }, [])
-    // console.log(items)
+    }, [currentPage,itemsPerPage])
+
+    useEffect(()=>{
+        const totalData = async()=>{
+            const {data} = await axios(`${import.meta.env.VITE_API_URL
+                }/cards-count`)
+                console.log(data)
+                setCount(data)
+        }
+        totalData()
+    },[])
+    const numberOfPages = Math.ceil(count / itemsPerPage)
+    const pages = [...Array(numberOfPages).keys()].map(element => element + 1)
     if(navigation.state==='loading'){
         return <Loading></Loading>
+    }
+    const handlePaginationButton=(btnNum)=>{
+        setCurrentPage(btnNum)
+    }
+    const handleReset=()=>{
+        setCurrentPage(1)
     }
     return (
         <div className='container px-6 py-10 mx-auto  flex flex-col justify-between'>
@@ -79,7 +99,7 @@ const Assignments = () => {
                             <option value='asc'>Ascending Order</option>
                         </select>
                     </div>
-                    <Link className="rounded-lg px-6 py-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 ring-1  ring-fuchsia-700 hover:ring-fuchsia-600 duration-300 ">
+                    <Link onClick={handleReset} className="rounded-lg px-6 py-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 ring-1  ring-fuchsia-700 hover:ring-fuchsia-600 duration-300 ">
                         Reset
                     </Link>
                 </div>
@@ -92,7 +112,7 @@ const Assignments = () => {
 
             <div className='flex justify-center mt-12'>
                 <button
-                    //  onClick={() => handlePaginationButton(currentPage - 1)} disabled={currentPage === 1} 
+                     onClick={() => handlePaginationButton(currentPage - 1)} disabled={currentPage === 1} 
                     className='rounded-lg px-4 py-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 ring-1  ring-fuchsia-700 hover:ring-fuchsia-600 duration-300   mx-1  disabled:text-gray-500 capitalize disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500  '>
                     <div className='flex items-center -mx-1'>
                         <svg
@@ -114,17 +134,18 @@ const Assignments = () => {
                     </div>
                 </button>
 
-                {/* {pages.map(btnNum => (
-                    <button onClick={() => handlePaginationButton(btnNum)}
+                {pages.map(btnNum => (
+                    <button 
+                    onClick={() => handlePaginationButton(btnNum)}
                         key={btnNum}
-                        className={`${currentPage === btnNum ? 'bg-blue-500 text-white' : ''} hidden px-4 py-2 mx-1 transition-colors duration-300 transform  rounded-md sm:inline hover:bg-blue-500  hover:text-white`}
+                        className={`${currentPage===btnNum?'ring-fuchsia-600 ring-offset-2 ring-1 bg-none rounded-lg':'rounded-lg'} px-3 py-2 mx-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600   text-accent  ring-1  ring-fuchsia-700  duration-300`}
                     >
                         {btnNum}
                     </button>
-                ))} */}
+                ))}
 
                 <button
-                    // onClick={() => handlePaginationButton(currentPage + 1)} disabled={numberOfPages === currentPage} 
+                    onClick={() => handlePaginationButton(currentPage + 1)} disabled={numberOfPages === currentPage} 
                     className='rounded-lg px-4 py-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 ring-1  ring-fuchsia-700 hover:ring-fuchsia-600 duration-300   mx-1  disabled:text-gray-500 capitalize disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 '>
                     <div className='flex items-center -mx-1'>
                         <span className='mx-1'>Next</span>
