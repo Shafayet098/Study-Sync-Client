@@ -1,14 +1,11 @@
 import axios from 'axios';
-import React, { use, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import { Link, useNavigate, useNavigation } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { Link,  useNavigation } from 'react-router';
 import { AuthContext } from '../Contexts/AuthContext';
 import Loading from './Loading';
 
 const PendingAssignments = () => {
-    const { user } = use(AuthContext)
     const navigation = useNavigation()
-    const navigate = useNavigate();
     const [items, setItems] = useState([])
     
     const getData = async () => {

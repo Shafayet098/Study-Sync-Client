@@ -2,6 +2,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { Link, Navigate, useLoaderData, useNavigate, useNavigation } from 'react-router';
+import Loading from './Loading';
 
 const AssignmentDetails = () => {
     const navigation = useNavigation()
@@ -9,7 +10,7 @@ const AssignmentDetails = () => {
     console.log(data)
     const navigate = useNavigate();
     if(navigation.state === 'loading'){
-        return <span>Loading....</span>
+        return <Loading></Loading>
     }
     const { _id, title, thumbnail, marks, userEmail, difficulty, description,username,photoURL,postedDate,deadline } = data;
     const formated_PostedDate = format(postedDate,"dd-MM-yyy")

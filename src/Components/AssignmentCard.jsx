@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 const AssignmentCard = ({ item }) => {
     // const [startDate, setStartDate] = useState(new Date());
-    const { _id, title,deadline,photoURL, postedDate, username, thumbnail, marks, userEmail, difficulty, description } = item;
+    const { _id, title,deadline,photoURL, postedDate, username, thumbnail, marks,  difficulty, description } = item;
     const formated_deadline = format(deadline,"dd-MM-yyy")
     const formated_PostedDate = format(postedDate,"dd-MM-yyy")
 

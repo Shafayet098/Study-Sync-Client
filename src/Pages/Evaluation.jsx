@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link, useLoaderData, useNavigate } from "react-router";
+import { Link, useLoaderData, useNavigate, useNavigation } from "react-router";
+import Loading from "./Loading";
 
 
 const Evaluation = () => {
@@ -9,7 +10,10 @@ const Evaluation = () => {
     const item = loadItem[0];
     const navigate = useNavigate()
     const [error, setError] = useState('')
-    
+    const navigation = useNavigation();
+    if(navigation.state === 'loading'){
+        return <Loading></Loading>
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         const form = e.target;

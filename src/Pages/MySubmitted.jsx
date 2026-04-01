@@ -1,14 +1,15 @@
 import axios from 'axios';
 import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../Contexts/AuthContext';
-import { useNavigate, useNavigation } from 'react-router';
+import { useNavigate, useNavigation} from 'react-router';
 import toast from 'react-hot-toast';
+import Loading from './Loading';
 
 const MySubmitted = () => {
     const { user } = use(AuthContext)
-    const navigation = useNavigation()
     const navigate = useNavigate();
     const [items, setItems] = useState([])
+    const navigation = useNavigation()
 
     const getData = async () => {
         const { data } = await axios(`${import.meta.env.VITE_API_URL
@@ -21,6 +22,9 @@ const MySubmitted = () => {
         getData()
     }, [])
     console.log(items)
+    if(navigation.state === 'loading'){
+        return <Loading></Loading>
+    }
     const handleEdit = (e,id) => {
         e.preventDefault()
         const value = e.target.value;

@@ -18,12 +18,16 @@ const Nav = () => {
         </NavLink>
         <NavLink to={'/assignments'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">All Assignments
         </NavLink>
-        <NavLink to={'/createAssignment'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">Create Assignment
-        </NavLink>
-        <NavLink to={'/mysubmitted'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">My Submitted
-        </NavLink>
-        <NavLink to={'/pending-assignments'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">All Pending
-        </NavLink>
+        {
+            user && <>
+                <NavLink to={'/createAssignment'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">Create Assignment
+                </NavLink>
+                <NavLink to={'/mysubmitted'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">My Submitted
+                </NavLink>
+                <NavLink to={'/pending-assignments'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">All Pending
+                </NavLink>
+            </>
+        }
 
     </>
     return (

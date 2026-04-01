@@ -1,15 +1,20 @@
 import axios from 'axios';
 import React, { use, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useNavigation } from 'react-router';
 import { AuthContext } from '../Contexts/AuthContext';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import toast from 'react-hot-toast';
+import Loading from './Loading';
 
 const CreateAssignment = () => {
     const { user } = use(AuthContext)
     const [startDate, setStartDate] = useState(new Date());
     const navigate = useNavigate()
+    const navigation = useNavigation();
+    if(navigation.state === 'loading'){
+        return <Loading></Loading>
+    }
     // console.log(startDate)
     const handleSubmit = async (e) => {
         e.preventDefault();

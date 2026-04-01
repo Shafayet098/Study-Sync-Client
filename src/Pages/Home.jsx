@@ -4,11 +4,12 @@ import Featured from '../Components/Featured';
 import Assignment from '../Components/Assignment';
 import FAQ from '../Components/FAQ';
 import { useNavigation } from 'react-router';
+import Loading from './Loading';
 
 const Home = () => {
     const navigation = useNavigation();
     if(navigation.state==='loading'){
-        return <span>Loading...</span>
+        return <Loading></Loading>
     }
     
     return (
