@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { Link, useLoaderData, useNavigate } from "react-router";
 
 
@@ -18,15 +19,16 @@ const Evaluation = () => {
         const itemData = {ObtainedMarks, feedback,AssignmentStatus}
         const fullMarks = parseInt(item.marks);
         const newMarks = parseInt(ObtainedMarks)
-        if(fullMarks>=newMarks && newMarks>0){
+        setError('')
+        if(!(fullMarks>=newMarks && newMarks>0)){
            return setError(`Marks must be greater than 0 and less then ${fullMarks}`)
 
         }
         console.log(itemData)
         try {
             const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/user/${item?._id}`, itemData)
-            // toast.success('Assignment Posting is Successful')
-            // navigate('/assignments')
+            toast.success('Evaluation Successful')
+            navigate('/pending-assignments')
             console.log(data)
         } catch (err) {
             console.log(err)
@@ -96,6 +98,7 @@ const Evaluation = () => {
                                     placeholder="Enter total marks"
                                     className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-fuchsia-500"
                                 />
+                                <p className="text-sm text-red-500">{error}</p>
 
                             </div>
 

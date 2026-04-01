@@ -3,13 +3,14 @@ import React, { use, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate, useNavigation } from 'react-router';
 import { AuthContext } from '../Contexts/AuthContext';
+import Loading from './Loading';
 
 const PendingAssignments = () => {
     const { user } = use(AuthContext)
     const navigation = useNavigation()
     const navigate = useNavigate();
     const [items, setItems] = useState([])
-
+    
     const getData = async () => {
         const { data } = await axios(`${import.meta.env.VITE_API_URL
             }/user?status=pending`)
@@ -21,9 +22,11 @@ const PendingAssignments = () => {
         getData()
     }, [])
     console.log(items)
-   
+   if(navigation.state==='loading'){
+        return <Loading></Loading>
+    }
     return (
-        <section className="container px-4 mx-auto py-12">
+        <section className=" px-4 container mx-auto py-12">
             <div className="flex items-center gap-x-3">
                 <h2 className="text-lg font-medium text-gray-800 dark:text-white">Total Pending Assignments : </h2>
 
@@ -93,6 +96,7 @@ const PendingAssignments = () => {
                         </div>
                     </div>
                 </div>
+                
             </div>
 
 

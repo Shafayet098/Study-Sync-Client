@@ -1,14 +1,25 @@
 import axios from 'axios';
+import { format } from 'date-fns';
 import toast from 'react-hot-toast';
-import { Link, Navigate, useLoaderData, useNavigate } from 'react-router';
+import { Link, Navigate, useLoaderData, useNavigate, useNavigation } from 'react-router';
 
 const AssignmentDetails = () => {
+    const navigation = useNavigation()
     const data = useLoaderData()
     console.log(data)
     const navigate = useNavigate();
-    const { _id, title, thumbnail, marks, dueDate, userEmail, difficulty, description,username } = data;
+    if(navigation.state === 'loading'){
+        return <span>Loading....</span>
+    }
+    const { _id, title, thumbnail, marks, userEmail, difficulty, description,username,photoURL,postedDate,deadline } = data;
+    const formated_PostedDate = format(postedDate,"dd-MM-yyy")
+    const formated_deadline = format(deadline,"dd-MM-yyy")
+    const todayDate = format(new Date(),"dd-MM-yyy") ;
+    
+    console.log(todayDate)
     const handleAssignment=async(e)=>{
         e.preventDefault();
+        
         const short_note = e.target.note.value;
         const doc_link = e.target.doc_link.value;
         const user = {short_note, doc_link}
@@ -49,14 +60,14 @@ const AssignmentDetails = () => {
                     <div class="mt-4">
                         <div class="flex justify-between items-center">
                             <div class="flex items-center gap-1">
-                                <img class="object-cover h-14 rounded-full" src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60" alt="Avatar" />
+                                <img class="object-cover h-14 rounded-full" src={photoURL} alt="Avatar" />
                                 <div>
                                     <div class="mx-2 font-semibold text-gray-700 text-lg dark:text-gray-200" tabindex="0" role="link">Jone Doe</div>
-                                    <div class="mx-2 text-md text-gray-600 dark:text-gray-300">Posted on: 21 SEP 2015</div>
+                                    <div class="mx-2 text-md text-gray-600 dark:text-gray-300">Posted on: {formated_PostedDate}</div>
                                 </div>
 
                             </div>
-                            <div className='text-lg mr-2'>DeadLine: {dueDate}</div>
+                            <div className='text-lg mr-2'>DeadLine: {formated_deadline}</div>
 
                         </div>
                     </div>
@@ -88,7 +99,10 @@ const AssignmentDetails = () => {
                             />
                         </div>
                         <div>
-                            <button type='submit' className="flex w-full items-center text-center justify-center rounded-lg px-6 py-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 ring-1  ring-fuchsia-700 hover:ring-fuchsia-600 duration-300  mt-5 ">
+                            <button  
+                            
+                            disabled={todayDate>formated_deadline?true:false} 
+                            type='submit' className="flex w-full items-center text-center justify-center rounded-lg px-6 py-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 ring-1 disabled:cursor-not-allowed  ring-fuchsia-700 hover:ring-fuchsia-600 duration-300  mt-5 ">
                                 Submit
                             </button>
                         </div>
