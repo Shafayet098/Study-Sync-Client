@@ -4,9 +4,11 @@ import { Link, useNavigation } from 'react-router';
 import AssignmentCard from '../Components/AssignmentCard';
 import Loading from './Loading';
 import { AuthContext } from '../Contexts/AuthContext';
+import UserAssignmentCard from '../Components/UserAssignmentCard';
+import { setDate } from 'date-fns';
 
 const MyPosted = () => {
-    const {user} = use(AuthContext)
+    const { user } = use(AuthContext)
     // console.log(user)
     const [items, setItems] = useState([])
     const navigation = useNavigation()
@@ -16,7 +18,7 @@ const MyPosted = () => {
     const [sort, setSort] = useState('')
     const [searchText, setSearchText] = useState('')
     const [filter, setFilter] = useState('')
-    
+    const email = user?.email;
     useEffect(() => {
         const getData = async () => {
             const { data } = await axios(`${import.meta.env.VITE_API_URL
@@ -25,32 +27,43 @@ const MyPosted = () => {
             setItems(data)
         }
         getData()
-    }, [currentPage,itemsPerPage,sort,searchText,filter,user.email])
+    }, [currentPage, itemsPerPage, sort, searchText, filter, user.email])
 
-    useEffect(()=>{
-        const totalData = async()=>{
-            const {data} = await axios(`${import.meta.env.VITE_API_URL
-                }/cards-count?filter=${filter}&search=${searchText}`)
-                // console.log(data)
-                setCount(data)
+    useEffect(() => {
+        const totalData = async () => {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL
+                }/cards-count?email=${email}&filter=${filter}&search=${searchText}`)
+            // console.log(data)
+            setCount(data)
         }
         totalData()
-    },[filter, searchText])
+    }, [filter, searchText,email])
     const numberOfPages = Math.ceil(count / itemsPerPage)
     const pages = [...Array(numberOfPages).keys()].map(element => element + 1)
-    if(navigation.state==='loading'){
+    if (navigation.state === 'loading') {
         return <Loading></Loading>
     }
-    const handlePaginationButton=(btnNum)=>{
+    const reloadData = async () => {
+        const { data } = await axios(`${import.meta.env.VITE_API_URL
+            }/mycards?email=${email}&page=${currentPage}&size=${itemsPerPage}&sort=${sort}&search=${searchText}&filter=${filter}`)
+        setItems(data)
+    }
+    const reloadCount = async() => {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL
+                }/cards-count?email=${email}&filter=${filter}&search=${searchText}`)
+            setCount(data)
+    }
+
+    const handlePaginationButton = (btnNum) => {
         setCurrentPage(btnNum)
     }
-    const handleReset=()=>{
+    const handleReset = () => {
         setCurrentPage(1)
         setSort('')
         setSearchText('')
         setFilter('')
     }
-    const handleSearch=(e)=>{
+    const handleSearch = (e) => {
         e.preventDefault();
         const text = e.target.search.value;
         setSearchText(text)
@@ -77,10 +90,10 @@ const MyPosted = () => {
                             <option value='digital marketing'>Digital Marketing</option>
                         </select>
                     </div>
-                    
+
 
                     <form
-                    onSubmit={handleSearch}
+                        onSubmit={handleSearch}
                     >
                         <div className='flex items-center py-1.5 px-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-primary focus-within:ring-primary hover:border-primary '>
                             <input
@@ -121,14 +134,17 @@ const MyPosted = () => {
                 </div>
                 <div className='grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-2'>
                     {items.map(item => (
-                        <AssignmentCard key={item._id} item={item} />
+                        <UserAssignmentCard key={item._id}
+                            item={item}
+                            reloadData={reloadData}
+                            reloadCount={reloadCount} />
                     ))}
                 </div>
             </div>
 
             <div className='flex justify-center mt-12'>
                 <button
-                     onClick={() => handlePaginationButton(currentPage - 1)} disabled={currentPage === 1} 
+                    onClick={() => handlePaginationButton(currentPage - 1)} disabled={currentPage === 1}
                     className='rounded-lg px-4 py-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 ring-1  ring-fuchsia-700 hover:ring-fuchsia-600 duration-300   mx-1  disabled:text-gray-500 capitalize disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500  '>
                     <div className='flex items-center -mx-1'>
                         <svg
@@ -151,17 +167,17 @@ const MyPosted = () => {
                 </button>
 
                 {pages.map(btnNum => (
-                    <button 
-                    onClick={() => handlePaginationButton(btnNum)}
+                    <button
+                        onClick={() => handlePaginationButton(btnNum)}
                         key={btnNum}
-                        className={`${currentPage===btnNum?'ring-fuchsia-600 ring-offset-2 ring-1 bg-none rounded-lg':'rounded-lg'} px-3 py-2 mx-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600   text-accent  ring-1  ring-fuchsia-700  duration-300`}
+                        className={`${currentPage === btnNum ? 'ring-fuchsia-600 ring-offset-2 ring-1 bg-none rounded-lg' : 'rounded-lg'} px-3 py-2 mx-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600   text-accent  ring-1  ring-fuchsia-700  duration-300`}
                     >
                         {btnNum}
                     </button>
                 ))}
 
                 <button
-                    onClick={() => handlePaginationButton(currentPage + 1)} disabled={numberOfPages === currentPage} 
+                    onClick={() => handlePaginationButton(currentPage + 1)} disabled={numberOfPages === currentPage}
                     className='rounded-lg px-4 py-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 ring-1  ring-fuchsia-700 hover:ring-fuchsia-600 duration-300   mx-1  disabled:text-gray-500 capitalize disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 '>
                     <div className='flex items-center -mx-1'>
                         <span className='mx-1'>Next</span>

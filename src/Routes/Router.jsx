@@ -13,6 +13,7 @@ import PrivateRoute from "./PrivateRoute"
 import Evaluation from "../Pages/Evaluation"
 import Error from "../Pages/Error"
 import MyPosted from "../Pages/MyPosted"
+import UpdateAssignment from "../Pages/UpdateAssignment"
 
 export const router = createBrowserRouter([
     {
@@ -77,6 +78,14 @@ export const router = createBrowserRouter([
                 element:
                     <PrivateRoute>
                         <MyPosted></MyPosted>
+                    </PrivateRoute>
+            },
+            {
+                path: '/myposts/update/:id',
+                loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/assignment/${params.id}`),
+                element:
+                    <PrivateRoute>
+                        <UpdateAssignment></UpdateAssignment>
                     </PrivateRoute>
             }
 
