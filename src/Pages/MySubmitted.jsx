@@ -10,10 +10,12 @@ const MySubmitted = () => {
     const navigate = useNavigate();
     const [items, setItems] = useState([])
     const navigation = useNavigation()
-
+    
     const getData = async () => {
         const { data } = await axios(`${import.meta.env.VITE_API_URL
-            }/user?email=${user?.email}`)
+            }/userData/${user?.email}`,{
+                withCredentials: true
+            })
         // console.log(data)
         setItems(data)
     }

@@ -1,0 +1,20 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="300" y2="0">
+      <stop offset="0%" stop-color="#ff00b3"/>
+      <stop offset="100%" stop-color="#FF00FF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon (book + check) -->
+  <g transform="translate(10,10)">
+    <path d="M20 10 Q30 0 40 10 L40 40 Q30 30 20 40 Z" stroke="url(#grad)" stroke-width="2" fill="none"/>
+    <path d="M20 10 Q10 0 0 10 L0 40 Q10 30 20 40 Z" stroke="url(#grad)" stroke-width="2" fill="none"/>
+    <path d="M8 25 L18 35 L32 18" stroke="url(#grad)" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- Text
+  <text x="70" y="50" font-size="32" font-family="Arial, sans-serif" fill="url(#grad)" font-weight="bold">
+    StudySync
+  </text> -->
+</svg>
