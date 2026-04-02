@@ -4,6 +4,7 @@ import Lottie from 'react-lottie';
 import { Link, useNavigate } from 'react-router';
 import { FcGoogle } from 'react-icons/fc';
 import { AuthContext } from '../Contexts/AuthContext';
+import toast from 'react-hot-toast';
 const Register = () => {
     const { signUp, updateUser, googleSignIN } = use(AuthContext)
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Register = () => {
                 // console.log(res)
                 updateUser(obj).then(() => {
                     // console.log("Profile Updated")
-                    navigate('/')
+                    navigate(location?.state || '/')
                 }).catch(err => {
                     const errorMessage = err.message;
                     setError(errorMessage)
@@ -41,12 +42,17 @@ const Register = () => {
 
             })
     }
+
+    const handleerrorToast=(value)=>{
+        toast.error(value)
+    }
     const handleGoogleSignIN = () => {
         googleSignIN().then(() => {
             navigate(location?.state || '/')
         }).catch(err => {
             const errorMessage = err.message;
             setError(errorMessage)
+            handleerrorToast(error)
         })
     }
     const defaultOptions = {
@@ -72,14 +78,14 @@ const Register = () => {
                 <p className="mt-3 text-xl text-center text-gray-200 py-2">
                     Please Sign Up!
                 </p>
-                <Link className="flex items-center justify-center gap-4 w-full rounded-lg px-4 py-2 overflow-hidden group bg-secondary relative bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 hover:ring-fuchsia-600 transition-all ease-out duration-300">
+                <button onClick={handleGoogleSignIN} className="flex items-center justify-center gap-4 w-full rounded-lg px-4 py-2 overflow-hidden group bg-secondary relative bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 hover:ring-fuchsia-600 transition-all ease-out duration-300">
                     <div>
                         <FcGoogle size={28}></FcGoogle>
                     </div>
                     <div>
                         <span className="relative text-md">Sign Up With Google</span>
                     </div>
-                </Link>
+                </button>
 
                 <div className="flex items-center justify-between mt-4">
                     <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/4"></span>
