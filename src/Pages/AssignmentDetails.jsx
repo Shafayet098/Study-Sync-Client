@@ -3,8 +3,11 @@ import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { Link, Navigate, useLoaderData, useNavigate, useNavigation } from 'react-router';
 import Loading from './Loading';
+import { use } from 'react';
+import { AuthContext } from '../Contexts/AuthContext';
 
 const AssignmentDetails = () => {
+    const {user} = use(AuthContext)
     const navigation = useNavigation()
     const data = useLoaderData()
     // console.log(data)
@@ -20,20 +23,22 @@ const AssignmentDetails = () => {
     // console.log(todayDate)
     const handleAssignment=async(e)=>{
         e.preventDefault();
-        
+        if(user.email === userEmail){
+           return toast.error("You Can not Bid to your Posted Assignment")
+        }
         const short_note = e.target.note.value;
         const doc_link = e.target.doc_link.value;
-        const user = {short_note, doc_link}
-         user.AssignmentID = _id;
-         user.userEmail = userEmail;
-         user.marks = marks;
-         user.AssignmentTitle = title;
-         user.ObtainedMarks = null;
-         user.AssignmentStatus = "pending"; 
-         user.assignmentID = _id;
-         user.examinee_name = username;  
+        const userData = {short_note, doc_link}
+         userData.AssignmentID = _id;
+         userData.userEmail = userEmail;
+         userData.marks = marks;
+         userData.AssignmentTitle = title;
+         userData.ObtainedMarks = null;
+         userData.AssignmentStatus = "pending"; 
+         userData.assignmentID = _id;
+         userData.examinee_name = username;  
          try{
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/user`, user)
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/user`, userData)
             toast.success('Assignment Submission Successful')
             navigate('/mysubmitted')
             // console.log(data)
