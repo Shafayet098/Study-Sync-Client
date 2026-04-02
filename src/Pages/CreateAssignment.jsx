@@ -12,7 +12,7 @@ const CreateAssignment = () => {
     const [startDate, setStartDate] = useState(new Date());
     const navigate = useNavigate()
     const navigation = useNavigation();
-    if(navigation.state === 'loading'){
+    if (navigation.state === 'loading') {
         return <Loading></Loading>
     }
     // console.log(startDate)
@@ -26,7 +26,7 @@ const CreateAssignment = () => {
         assignmentData.postedDate = new Date();
         assignmentData.deadline = startDate;
         assignmentData.username = user.displayName
-            console.log(assignmentData)
+        console.log(assignmentData)
         try {
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/assign`, assignmentData)
             toast.success('Assignment Posting is Successful')
@@ -35,7 +35,6 @@ const CreateAssignment = () => {
         } catch (err) {
             console.log(err)
         }
-
     }
     return (
         <section className="mb-12">
@@ -153,13 +152,34 @@ const CreateAssignment = () => {
                             )} */}
                         </div>
 
-                        <div>
-                            <label className="block mb-2 text-sm font-medium text-white">
-                                Due Date
-                            </label>
-                            <DatePicker className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-fuchsia-500" selected={startDate} onChange={(date) => setStartDate(date)} />
+                        <div className='flex justify-between'>
+                            <div className='w-[48%] flex flex-col'>
+                                <label className="block mb-2 text-sm font-medium text-white">
+                                    Due Date
+                                </label>
+                                <DatePicker className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-fuchsia-500" selected={startDate} onChange={(date) => setStartDate(date)} />
 
-
+                            </div>
+                            <div className='flex flex-col w-[48%]'>
+                                <label className="block mb-2 text-sm font-medium text-white">
+                                    Category
+                                </label>
+                                <select
+                                    name="category"
+                                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-fuchsia-500"
+                                >
+                                    <option value="web development" className="bg-black">
+                                        Web Development
+                                    </option>
+                                    <option value="digital marketing" className="bg-black">
+                                        Digital Marketing
+                                    </option>
+                                    <option value="cyber security" className="bg-black">
+                                        Cyber Security
+                                    </option>
+                                </select>
+                               
+                            </div>
                         </div>
 
                         <button type='submit' className="flex w-full items-center text-center justify-center rounded-lg px-6 py-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 ring-1  ring-fuchsia-700 hover:ring-fuchsia-600 duration-300  mt-5 ">

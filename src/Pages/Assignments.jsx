@@ -8,27 +8,30 @@ const Assignments = () => {
     const [items, setItems] = useState([])
     const navigation = useNavigation()
     const [count, setCount] = useState(0)
-    const [itemsPerPage, setItemsPerPage] = useState(2);
+    const [itemsPerPage, setItemsPerPage] = useState(4);
     const [currentPage, setCurrentPage] = useState(1);
+    const [sort, setSort] = useState('')
+    const [searchText, setSearchText] = useState('')
+    const [filter, setFilter] = useState('')
     useEffect(() => {
         const getData = async () => {
             const { data } = await axios(`${import.meta.env.VITE_API_URL
-                }/cards?page=${currentPage}&size=${itemsPerPage}`)
+                }/cards?page=${currentPage}&size=${itemsPerPage}&sort=${sort}&search=${searchText}&filter=${filter}`)
             console.log(data)
             setItems(data)
         }
         getData()
-    }, [currentPage,itemsPerPage])
+    }, [currentPage,itemsPerPage,sort,searchText,filter])
 
     useEffect(()=>{
         const totalData = async()=>{
             const {data} = await axios(`${import.meta.env.VITE_API_URL
-                }/cards-count`)
+                }/cards-count?filter=${filter}&search=${searchText}`)
                 console.log(data)
                 setCount(data)
         }
         totalData()
-    },[])
+    },[filter, searchText])
     const numberOfPages = Math.ceil(count / itemsPerPage)
     const pages = [...Array(numberOfPages).keys()].map(element => element + 1)
     if(navigation.state==='loading'){
@@ -39,36 +42,45 @@ const Assignments = () => {
     }
     const handleReset=()=>{
         setCurrentPage(1)
+        setSort('')
+        setSearchText('')
+        setFilter('')
     }
+    const handleSearch=(e)=>{
+        e.preventDefault();
+        const text = e.target.search.value;
+        setSearchText(text)
+    }
+    // console.log(filter)
     return (
         <div className='container px-6 py-10 mx-auto  flex flex-col justify-between'>
             <div>
                 <div className='flex flex-col md:flex-row justify-center items-center gap-5 '>
                     <div>
                         <select
-                            // onChange={(e) => {
-                            //     setFilter(e.target.value)
-                            //     setCurrentPage(1)
-                            // }}
-                            // value={filter}
+                            onChange={(e) => {
+                                setFilter(e.target.value)
+                                setCurrentPage(1)
+                            }}
+                            value={filter}
                             name='category'
                             id='category'
                             className='border bg-black text-accent p-3 rounded-lg hover:border-primary'
                         >
                             <option value=''>Filter By Category</option>
                             <option value='web development'>Web Development</option>
-                            <option value='graphics design'>Graphics Design</option>
+                            <option value='cyber security'>Cyber Security</option>
                             <option value='digital marketing'>Digital Marketing</option>
                         </select>
                     </div>
                     
 
                     <form
-                    // onSubmit={handleSearch}
+                    onSubmit={handleSearch}
                     >
                         <div className='flex items-center py-1.5 px-1 overflow-hidden border rounded-lg    focus-within:ring focus-within:ring-opacity-40 focus-within:border-primary focus-within:ring-primary hover:border-primary '>
                             <input
-                                className='px-6 py-2 text-gray-700 placeholder-accent outline-none focus:placeholder-transparent'
+                                className='px-6 py-2 placeholder-accent outline-none focus:placeholder-transparent'
                                 // onChange={(e) => setSearchText(e.target.value)}
                                 // value={searchText}
                                 type='text'
@@ -77,19 +89,19 @@ const Assignments = () => {
                                 aria-label='Enter Assignment Title'
                             />
 
-                            <Link className="rounded-lg px-6 py-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 ring-1  ring-fuchsia-700 hover:ring-fuchsia-600 duration-300 ">
+                            <button type='submit' className="rounded-lg px-6 py-2 group bg-secondary bg-gradient-to-l from-slate-950 to-fuchsia-600 hover:bg-none  text-accent hover:ring-1 hover:ring-offset-2 ring-1  ring-fuchsia-700 hover:ring-fuchsia-600 duration-300 ">
                                 Search
-                            </Link>
+                            </button>
                         </div>
                     </form>
 
                     <div>
                         <select
-                            // onChange={(e) => {
-                            //     setSort(e.target.value)
-                            //     setCurrentPage(1)
-                            // }}
-                            // value={sort}
+                            onChange={(e) => {
+                                setSort(e.target.value)
+                                setCurrentPage(1)
+                            }}
+                            value={sort}
                             name='sort'
                             id='sort'
                             className='border p-4 rounded-md  hover:border-primary bg-black'
