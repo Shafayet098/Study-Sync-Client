@@ -24,6 +24,8 @@ const Nav = () => {
                 </NavLink>
                 <NavLink to={'/mysubmitted'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">My Submitted
                 </NavLink>
+                <NavLink to={'/myposted'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">My Posted
+                </NavLink>
                 <NavLink to={'/pending-assignments'} className="mx-2 mt-2 text-md transition-colors duration-300 transform rounded-md lg:mt-0 text-accent hover:text-primary ">All Pending
                 </NavLink>
             </>
@@ -75,7 +77,7 @@ const Nav = () => {
                             <div className=''>
                                 {
                                     user &&
-                                    <button onClick={() => setShow(!show)} className={`${show ? 'hidden items-center md:flex focus:outline-none' : 'items-center hidden md:flex focus:outline-none'} cursor-pointer`} aria-label="toggle profile dropdown">
+                                    <button onClick={() => setShow(!show)} className={`${show ? 'hidden items-center  focus:outline-none' : 'items-center hidden lg:flex focus:outline-none'} cursor-pointer`} aria-label="toggle profile dropdown">
                                         <div className=" md:w-12 md:h-12  overflow-hidden border-4 border-gray-400 rounded-full">
                                             <img src={user?.photoURL} alt="avatar" />
                                         </div>
@@ -83,7 +85,7 @@ const Nav = () => {
                                 }
 
                                 {
-                                    user && <button onClick={() => setShow(!show)} className={`${show ? 'hidden ' : 'flex'} md:hidden`}>
+                                    user && <button onClick={() => setShow(!show)} className={`${show ? 'hidden ' : 'flex'} lg:hidden`}>
                                         <MdMenuOpen className='hover:text-primary' size={30}></MdMenuOpen>
                                     </button>
                                 }

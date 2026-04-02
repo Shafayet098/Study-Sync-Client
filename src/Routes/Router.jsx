@@ -12,6 +12,7 @@ import PendingAssignments from "../Pages/PendingAssignments"
 import PrivateRoute from "./PrivateRoute"
 import Evaluation from "../Pages/Evaluation"
 import Error from "../Pages/Error"
+import MyPosted from "../Pages/MyPosted"
 
 export const router = createBrowserRouter([
     {
@@ -69,6 +70,13 @@ export const router = createBrowserRouter([
                 element:
                     <PrivateRoute>
                         <Evaluation></Evaluation>
+                    </PrivateRoute>
+            },
+            {
+                path: 'myposted',
+                element:
+                    <PrivateRoute>
+                        <MyPosted></MyPosted>
                     </PrivateRoute>
             }
 
