@@ -33,8 +33,8 @@ const PendingAssignments = () => {
             <div className="flex flex-col mt-6">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                        <div className="overflow-hidden border  dark:border-gray-700 md:rounded-lg ">
-                            <table className="min-w-full divide-y divide-gray-200  dark:divide-gray-700 text-center ">
+                        <div className="w-fit overflow-x-auto overflow-y-auto max-h-[500px]  border mx-auto  dark:border-gray-700 md:rounded-lg ">
+                            <table className="min-w-[900px] lg:min-w-[1200px]  table-auto border-collapse  divide-y divide-gray-200  dark:divide-gray-700 text-center ">
                                 <thead className=" bg-white/5 text-center">
                                     <tr>
                                         <th className='px-2 text-sm font-normal text-gray-500 dark:text-gray-400 '>SL No.</th>
