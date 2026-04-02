@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
         const { data } = await axios(`${import.meta.env.VITE_API_URL}/logout`, {
             withCredentials: true
         })
-        console.log(data)
+        // console.log(data)
         return signOut(auth)
     }
     const googleSignIN = () => {
@@ -37,7 +37,7 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-            console.log("Current User On Auth State Changed: ", currentUser)
+            // console.log("Current User On Auth State Changed: ", currentUser)
             setUser(currentUser)
             setLoading(false)
             if (currentUser.email) {
@@ -46,7 +46,9 @@ const AuthProvider = ({ children }) => {
                     }/jwt`, userData, {
                     withCredentials: true
                 }).then(res => console.log('Token: ', res.data))
-                    .catch(err => console.log(err))
+                    .catch(() => {
+                        // console.log(err)
+                    })
             }
         })
         return () => {

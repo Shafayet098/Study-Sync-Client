@@ -18,7 +18,7 @@ const PendingAssignments = () => {
 
         getData()
     }, [])
-    console.log(items)
+    // console.log(items)
    if(navigation.state==='loading'){
         return <Loading></Loading>
     }

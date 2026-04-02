@@ -28,14 +28,14 @@ const Evaluation = () => {
            return setError(`Marks must be greater than 0 and less then ${fullMarks}`)
 
         }
-        console.log(itemData)
+        // console.log(itemData)
         try {
             const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/user/${item?._id}`, itemData)
             toast.success('Evaluation Successful')
             navigate('/pending-assignments')
-            console.log(data)
+            // console.log(data)
         } catch (err) {
-            console.log(err)
+            // console.log(err)
         }
 
     }

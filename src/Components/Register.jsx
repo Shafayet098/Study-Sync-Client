@@ -18,7 +18,7 @@ const Register = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         const obj = { displayName, photoURL }
-        console.log(displayName,photoURL, email, password)
+        // console.log(displayName,photoURL, email, password)
         const regExp = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
         if (regExp.test(password) === false) {
             setError("Password must be at lest 8 characters which composed of at lest one capital letter, one small letter, one number")
@@ -26,10 +26,10 @@ const Register = () => {
         }
 
         signUp(email, password)
-            .then((res) => {
-                console.log(res)
+            .then(() => {
+                // console.log(res)
                 updateUser(obj).then(() => {
-                    console.log("Profile Updated")
+                    // console.log("Profile Updated")
                     navigate('/')
                 }).catch(err => {
                     const errorMessage = err.message;

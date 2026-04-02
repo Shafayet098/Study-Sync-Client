@@ -10,7 +10,7 @@ const MySubmitted = () => {
     const navigate = useNavigate();
     const [items, setItems] = useState([])
     const navigation = useNavigation()
-    
+
     const getData = async () => {
         const { data } = await axios(`${import.meta.env.VITE_API_URL
             }/userData/${user?.email}`,{
@@ -23,14 +23,14 @@ const MySubmitted = () => {
         
         getData()
     }, [])
-    console.log(items)
+    // console.log(items)
     if(navigation.state === 'loading'){
         return <Loading></Loading>
     }
     const handleEdit = (e,id) => {
         e.preventDefault()
         const value = e.target.value;
-        console.log(value, id)
+        // console.log(value, id)
         if (value === 'Edit') {
             return navigate('/')
         }
@@ -44,7 +44,9 @@ const MySubmitted = () => {
                 }
             }
                 )
-            .catch(err=>console.log(err))
+            .catch(err=>{
+                // console.log(err)
+        })
         }
     }
     return (

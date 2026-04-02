@@ -7,7 +7,7 @@ import Loading from './Loading';
 const AssignmentDetails = () => {
     const navigation = useNavigation()
     const data = useLoaderData()
-    console.log(data)
+    // console.log(data)
     const navigate = useNavigate();
     if(navigation.state === 'loading'){
         return <Loading></Loading>
@@ -17,7 +17,7 @@ const AssignmentDetails = () => {
     const formated_deadline = format(deadline,"dd-MM-yyy")
     const todayDate = format(new Date(),"dd-MM-yyy") ;
     
-    console.log(todayDate)
+    // console.log(todayDate)
     const handleAssignment=async(e)=>{
         e.preventDefault();
         
@@ -36,9 +36,10 @@ const AssignmentDetails = () => {
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/user`, user)
             toast.success('Assignment Submission Successful')
             navigate('/mysubmitted')
-            console.log(data)
+            // console.log(data)
          }catch(err){
-            console.log(err)}
+            // console.log(err)
+            }
     }
     return (
         <div className='container mx-auto px-12 mb-12'>

@@ -26,14 +26,14 @@ const CreateAssignment = () => {
         assignmentData.postedDate = new Date();
         assignmentData.deadline = startDate;
         assignmentData.username = user.displayName
-        console.log(assignmentData)
+        // console.log(assignmentData)
         try {
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/assign`, assignmentData)
             toast.success('Assignment Posting is Successful')
             navigate('/assignments')
-            console.log(data)
+            // console.log(data)
         } catch (err) {
-            console.log(err)
+            // console.log(err)
         }
     }
     return (

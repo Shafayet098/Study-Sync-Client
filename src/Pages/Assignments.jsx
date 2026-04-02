@@ -17,7 +17,7 @@ const Assignments = () => {
         const getData = async () => {
             const { data } = await axios(`${import.meta.env.VITE_API_URL
                 }/cards?page=${currentPage}&size=${itemsPerPage}&sort=${sort}&search=${searchText}&filter=${filter}`)
-            console.log(data)
+            // console.log(data)
             setItems(data)
         }
         getData()
@@ -27,7 +27,7 @@ const Assignments = () => {
         const totalData = async()=>{
             const {data} = await axios(`${import.meta.env.VITE_API_URL
                 }/cards-count?filter=${filter}&search=${searchText}`)
-                console.log(data)
+                // console.log(data)
                 setCount(data)
         }
         totalData()
