@@ -37,6 +37,7 @@ const AssignmentDetails = () => {
          userData.AssignmentStatus = "pending"; 
          userData.assignmentID = _id;
          userData.examinee_name = username;  
+         userData.examinee_email = user.email;
          try{
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/user`, userData)
             toast.success('Assignment Submission Successful')
